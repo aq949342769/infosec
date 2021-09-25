@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <h2 class="col-md-5">Message</h2>
+            <h2 class="col-md-2"></h2>
+            <h2 class="col-md-5">Ciphertext</h2>
+        </div>
+        <div class="row">
+            
+            <textarea class="col-md-5" rows="5" id="msg"></textarea>
+            <button type="button" class="btn btn-success col-md-2" id="convert">convert</button>
+            <textarea class="col-md-5" rows="5" id="cipher"></textarea>
+        </div>
+        <div class="row">
+            <label for="key">KEY</label>
+            <input type="text" class="form-control col-md-12" id="key">
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script src="./index.js"></script>

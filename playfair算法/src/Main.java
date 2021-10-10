@@ -21,7 +21,7 @@ public class Main {
             System.out.println();
         }
         // 获取明文对
-        List<String> mText = getDoubleChar("ballokijkllkkon");//[ba, lk, lo, ki, jk, lk, lk, ko, nk]
+        List<String> mText = getDoubleChar("balloon");//[ba, lk, lo, on]
         System.out.println(mText);
         // 明文加密
         List<String> cText = playFair(matrixDS.getMatrix(), matrixDS.getQueryMap(), mText);
@@ -29,6 +29,9 @@ public class Main {
         // 密文解密
         List<String> c_mText = dePlayFair(matrixDS.getMatrix(), matrixDS.getQueryMap(), cText);
         System.out.println(c_mText);
+        // // 明文对的复原
+        // String s = reSetString(c_mText);
+        // System.out.println(s);
     }
 
     // 获取明文对
@@ -36,14 +39,22 @@ public class Main {
         List<String> ls = new ArrayList<>();
         StringBuilder sb = new StringBuilder(msg);
         for (int i = 0; i < sb.length(); i += 2) {
-            // 最后一组只有一个字母，补k
+            // 最后一个字母的处理
             if (i == sb.length() - 1)
-                sb.insert(i + 1, 'k');
+                if(sb.charAt(i)=='k'){
+                    // 如果最后一个字母为k，补i
+                    sb.insert(i+1,'i');
+                }else {
+                    // 其他情况，补k
+                    sb.insert(i + 1, 'k');
+                }
+            // 同一组字母相同的处理
             if (sb.charAt(i) == sb.charAt(i + 1)) {
                 if (sb.charAt(i) == 'k') {
                     // 同一组相同字母为k
                     sb.insert(i + 1, 'i');
                 } else
+                    // 其他情况
                     sb.insert(i + 1, 'k');
             }
         }
@@ -85,7 +96,7 @@ public class Main {
     }
 
     // 解密算法
-    public static List<String> dePlayFair(char[][] matrix, HashMap<Character, int[]> queryMatrix, List<String> cText){
+    public static List<String> dePlayFair(char[][] matrix, HashMap<Character, int[]> queryMatrix, List<String> cText) {
         List<String> mText = new ArrayList<>();
         for (String str : cText) {
             // 1、分别字母对各字母在矩阵中的位置(x1,y1)(x2,y2)
@@ -110,4 +121,27 @@ public class Main {
         return mText;
     }
 
+    // 明文对的复原
+    public static String reSetString(List<String> mText) {
+        StringBuilder oldsb = new StringBuilder();
+        StringBuilder newsb = new StringBuilder();
+        for (String s : mText) {
+            oldsb.append(s);
+        }
+        int l = 0, h = 2;
+        while (h < oldsb.length()) {
+            if (oldsb.charAt(l) == oldsb.charAt(h)) {
+                newsb.append(oldsb.charAt(l));
+                newsb.append(oldsb.charAt(h));
+                l+=3;
+                h+=3;
+            } else {
+                newsb.append(oldsb.charAt(l));
+                ++l;
+                ++h;
+            }
+
+        }
+        return newsb.toString();
+    }
 }

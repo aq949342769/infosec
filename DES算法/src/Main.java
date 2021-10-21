@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Main {
-    final static int TIMES = 1000;
+    final static int TIMES = 3000;
     final static int maxBits = 64;
 
     // 将字节数组输出为16进制串

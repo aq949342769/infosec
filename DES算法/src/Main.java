@@ -42,7 +42,7 @@ public class Main {
         System.out.println("key nochange:");
         ArrayList<Integer> keyFix_statistics = keyFix(des_key, des_input);
 
-        // // 明文固定
+        // 明文固定
         System.out.println("massage nochage:");
         ArrayList<Integer> msgFix_statistics = msgFIx(des_key, des_input);
 

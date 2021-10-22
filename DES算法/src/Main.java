@@ -217,7 +217,7 @@ public class Main {
         return count;
     }
 
-    // 改变明文（第i字节中的第j位）
+    // 改变分组（第i字节中的第j位）
     public static void change(byte[] bytes, int i, int j) {
         // 得到原字节码的二进制字符串
         String s = toBinary(bytes[i], 8);

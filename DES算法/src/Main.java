@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Main {
-    final static int TIMES = 3000;
+    final static int TIMES = 6;
     final static int maxBits = 64;
 
     // 将字节数组输出为16进制串
@@ -34,22 +34,30 @@ public class Main {
         // 1111111111111111 1111111111111111  F40379AB9E0EC533
         // 初始化密钥和明文，输出结果是  F4 03 79 AB 9E 0E C5 33
         for (int i = 0; i < 8; i++) {
-            des_key[i] = 0x11;
+            des_key[i] = 0x01;
             des_input[i] = 0x11;
         }
 
         // 密钥固定
         System.out.println("key nochange:");
         ArrayList<Integer> keyFix_statistics = keyFix(des_key, des_input);
-        for (int i = 0; i < keyFix_statistics.size(); i++) {
-            System.out.println("改变" + (i + 1) + "位明文的密文改变位数平均值: " + keyFix_statistics.get(i));
-        }
 
         // // 明文固定
         System.out.println("massage nochage:");
         ArrayList<Integer> msgFix_statistics = msgFIx(des_key, des_input);
+
+        System.out.println("测试结果:");
+        System.out.println("固定密钥1～64位数变化均值：");
+        for (int i = 0; i < keyFix_statistics.size(); i++) {
+            if (i % 16 == 0 && i != 0) System.out.println();
+            System.out.print(keyFix_statistics.get(i) + " ");
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println("固定明文1～64位数变化均值：");
         for (int i = 0; i < msgFix_statistics.size(); i++) {
-            System.out.println("改变" + (i + 1) + "位密钥的密文改变位数平均值: " + msgFix_statistics.get(i));
+            if (i % 16 == 0 && i != 0) System.out.println();
+            System.out.print(msgFix_statistics.get(i) + " ");
         }
     }
 
@@ -79,8 +87,15 @@ public class Main {
                 // 用一个集合记录被改过的索引
                 Set<String> changed = new HashSet<>();
 
+                System.out.print("改变前 ");
+                for (byte b : clone_des_input) {
+                    System.out.print(toBinary(b, 8) + " ");
+                }
+                System.out.println();
+
                 // 每次改变一个，知道改完bit个为止，要防止随机数相同
-                for (int r = 0; r < bit; ) {
+                int r = 0;
+                for (r = 0; r < bit; ) {
                     random_i = (int) (Math.random() * 8);
                     random_j = (int) (Math.random() * 8);
                     if (changed.contains("<" + random_i + ", " + random_j + ">"))
@@ -88,33 +103,23 @@ public class Main {
                     changed.add("<" + random_i + ", " + random_j + ">");
                     r++;
 
-                    // System.out.println();
-                    // System.out.println("i:" + random_i);
-                    // System.out.println("j:" + random_j);
-                    // System.out.print("改变前 ");
-                    // for (byte b : clone_des_input) {
-                    //     System.out.print(toBinary(b, 8) + " ");
-                    // }
-                    // System.out.println();
-
                     // 改变明文（第i字节中的第j位）
                     change(clone_des_input, random_i, random_j);
 
-                    // System.out.print("改变后 ");
-                    // for (byte b : clone_des_input) {
-                    //     System.out.print(toBinary(b, 8) + " ");
-                    // }
-                    // System.out.println();
                 }
-
+                System.out.print("改变后 ");
+                for (byte b : clone_des_input) {
+                    System.out.print(toBinary(b, 8) + " ");
+                }
+                System.out.println();
+                System.out.println("固定密钥 改变" + bit + "位明文 第" + (i + 1) + "次测试：");
                 // 改变位后加密
                 keyFix_des_output = des(des_key, clone_des_input);
-                // System.out.println(ByteArrayToHex(des_output));
                 int count = countChangeBits(des_cy, keyFix_des_output);
-                // System.out.println("改变位数：" + count);
+                System.out.println("改变位数：" + count);
+                System.out.println();
                 sum += count;
             }
-            // System.out.println("average：" + sum / TIMES);
             statistics.add(sum / TIMES);
         }
 
@@ -145,6 +150,12 @@ public class Main {
                 // 用一个集合记录被改过的索引
                 Set<String> changed = new HashSet<>();
 
+                System.out.print("改变前 ");
+                for (byte b : clone_key_input) {
+                    System.out.print(toBinary(b, 8) + " ");
+                }
+                System.out.println();
+
                 // 每次改变一个，直到改完bit个为止，要防止随机数相同
                 for (int r = 0; r < bit; ) {
                     random_i = (int) (Math.random() * 8);
@@ -154,33 +165,26 @@ public class Main {
                     changed.add("<" + random_i + ", " + random_j + ">");
                     r++;
 
-                    // System.out.println();
-                    // System.out.println("i:" + random_i);
-                    // System.out.println("j:" + random_j);
-                    // System.out.print("改变前 ");
-                    // for (byte b : clone_des_input) {
-                    //     System.out.print(toBinary(b, 8) + " ");
-                    // }
-                    // System.out.println();
-
                     // 改变密钥（第i字节中的第j位）
                     change(clone_key_input, random_i, random_j);
 
-                    // System.out.print("改变后 ");
-                    // for (byte b : clone_des_input) {
-                    //     System.out.print(toBinary(b, 8) + " ");
-                    // }
-                    // System.out.println();
                 }
 
-                // 加密开始
+                System.out.print("改变后 ");
+                for (byte b : clone_key_input) {
+                    System.out.print(toBinary(b, 8) + " ");
+                }
+                System.out.println();
+                System.out.println("明文固定 改变" + bit + "位密钥 第" + (i + 1) + "次测试：");
+
+                // 改变位后加密
                 msgFix_des_output = des(clone_key_input, des_input);
-                // System.out.println(ByteArrayToHex(des_output));
                 int count = countChangeBits(des_cy, msgFix_des_output);
-                // System.out.println("改变位数：" + count);
+                System.out.println("改变位数：" + count);
+                System.out.println();
                 sum += count;
+
             }
-            // System.out.println("average：" + sum / TIMES);
             statistics.add(sum / TIMES);
         }
 

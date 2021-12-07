@@ -115,7 +115,7 @@ public class Main {
         // 公钥
         int e = 17;
         // 加密
-        int c = ExpMod(47, 17, 437);
+        int c = ExpMod(45, 17, 437);
         System.out.println("ctext:" + c);
         // 计算密钥
         int d = InvMod(fin, e);

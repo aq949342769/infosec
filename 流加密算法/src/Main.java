@@ -26,7 +26,7 @@ public class Main {
 
         // 获取明文数据
         final File[] msgFile = {null};
-        final File[] keyFile = {new File("src/key.txt")};//默认选择工程内的密钥
+        final File[] keyFile = {new File("流加密算法/src/key.txt")};//默认选择工程内的密钥
 
         // 加密
         b1.addActionListener(new ActionListener() {
@@ -84,7 +84,8 @@ public class Main {
         // 获取密钥
         FileInputStream fis = new FileInputStream(msgFile);
         String fileName = msgFile.getName();
-        File cipherText = new File("src", "CText_" + fileName);
+        File cipherText = new File("流加密算法/src", "CText_" + fileName);
+        System.out.println(cipherText.getAbsolutePath());
         FileOutputStream fos = new FileOutputStream(cipherText);
         int by, count = 0;
         List<Integer> key = getKey(keyFile);
@@ -102,7 +103,7 @@ public class Main {
             String fileName = cypherFile.getName();
             String[] cText_s = fileName.split("_");
             FileInputStream fis = new FileInputStream(cypherFile);
-            FileOutputStream fos = new FileOutputStream("src/MText_"+ cText_s[1]);
+            FileOutputStream fos = new FileOutputStream("流加密算法/src/MText_"+ cText_s[1]);
             List<Integer> key = getKey(keyFile);
             int by, count = 0;
             while ((by = fis.read()) != -1) {

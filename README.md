@@ -13,7 +13,7 @@
 * idea
 
 ## 流加密算法
-    
+
 
 ### 测试用例
 
@@ -73,13 +73,13 @@ private static byte[] des(byte[] des_key, byte[] des_input)
 * 密钥固定结果：
 * 
 
-<img src="/DES算法/src/image-20211021231215233.png" alt="image-20211021231215233" style="zoom:50%;" /><img src="/DES算法/src/image-20211021231310747.png" alt="image-20211021231310747" style="zoom:50%;" />
-
-
+![](DES算法/src/image-20211021231215233.png)
+![](DES算法/src/image-20211021231310747.png)
 
 * 明文固定结果
 
-<img src="/DES算法/src/image-20211021231432709.png" alt="image-20211021231432709" style="zoom:50%;" /><img src="/DES算法/src/image-20211021231458141.png" alt="image-20211021231458141" style="zoom:50%;" />
+![](DES算法/src/image-20211021231432709.png)
+![](DES算法/src/image-20211021231458141.png)
 
 ## playfair算法
 ## RSA算法
